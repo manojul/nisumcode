@@ -38,7 +38,8 @@ public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws Wron
   
   private void findMinRange(Integer[] intArrObj , ArrayList<Integer[]> rangeList )
   {
-	 boolean doadd=true;	
+	 boolean doadd=true;
+	 boolean isOverLap=false;
 	 for(int i=0; i<rangeList.size();i++) 
 	 {
 		if (Arrays.deepEquals(intArrObj, rangeList.get(i)))
@@ -46,24 +47,25 @@ public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws Wron
 			doadd=false;
 			break;
 		} 
-		if(isRangeOverlap(intArrObj,rangeList.get(i)) && inRange(intArrObj[0],rangeList.get(i)) && inRange(intArrObj[1],rangeList.get(i)) )
+		isOverLap=isRangeOverlap(intArrObj,rangeList.get(i));
+		if(isOverLap && inRange(intArrObj[0],rangeList.get(i)) && inRange(intArrObj[1],rangeList.get(i)) )
 		{
 				doadd=false;
 				break;
 		}
-		else if(isRangeOverlap(intArrObj,rangeList.get(i)) && inRange(intArrObj[0],rangeList.get(i)) && !inRange(intArrObj[1],rangeList.get(i)))
+		else if(isOverLap && inRange(intArrObj[0],rangeList.get(i)) && !inRange(intArrObj[1],rangeList.get(i)))
 		{
 				rangeList.get(i)[1]=intArrObj[1];
 				doadd=false;
 				break;
 		}
-		else if(isRangeOverlap(intArrObj,rangeList.get(i)) && !inRange(intArrObj[0],rangeList.get(i)) && inRange(intArrObj[1],rangeList.get(i)))
+		else if(isOverLap && !inRange(intArrObj[0],rangeList.get(i)) && inRange(intArrObj[1],rangeList.get(i)))
 		{
 			rangeList.get(i)[0]=intArrObj[0];
 			doadd=false;
 			break;
 		} 
-		else if(isRangeOverlap(intArrObj,rangeList.get(i)) && !inRange(intArrObj[0],rangeList.get(i)) && !inRange(intArrObj[1],rangeList.get(i)))
+		else if(isOverLap && !inRange(intArrObj[0],rangeList.get(i)) && !inRange(intArrObj[1],rangeList.get(i)))
 		{
 			rangeList.get(i)[0]=intArrObj[0];
 			rangeList.get(i)[1]=intArrObj[1];
