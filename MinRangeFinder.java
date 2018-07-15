@@ -9,7 +9,7 @@ public class MinRangeFinder implements RangeFinder
 	     ArrayList<Integer []> rangeList=new ArrayList<Integer []>();
 	 try
 	 {
-		 Collections.sort(inputRangeArrayList, MinRangeFinder.compareRange);
+		 Collections.sort(inputRangeArrayList, compareRange);
 		 checkValidRange(inputRangeArrayList); 
 		 for(Integer[] intArr : inputRangeArrayList )
 		 {
@@ -96,7 +96,7 @@ public class MinRangeFinder implements RangeFinder
 	 } 
 	 
   }
-  public static Comparator<Integer[]> compareRange = new Comparator<Integer[]>() {
+  public  Comparator<Integer[]> compareRange = new Comparator<Integer[]>() {
 
 	public int compare(Integer[] arr1, Integer[] arr2) {
 
