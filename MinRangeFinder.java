@@ -1,28 +1,20 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MinRangeFinder implements RangeFinder   
 { 
-public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws WrongRangeException
-  {
-	     ArrayList<Integer []> outPutRangeList=new ArrayList<Integer []>();
+	public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws WrongRangeException{
+	     ArrayList<Integer []> rangeList=new ArrayList<Integer []>();
 	 try
 	 {
-		 ArrayList<Integer []> rangeList=new ArrayList<Integer []>(); 
+		 Collections.sort(inputRangeArrayList, MinRangeFinder.compareRange);
 		 checkValidRange(inputRangeArrayList); 
 		 for(Integer[] intArr : inputRangeArrayList )
 		 {
 			 findMinRange(intArr ,rangeList);
-		 }
-		 for(Integer[] intr : rangeList )
-		 {
-			 findMinRange(intr ,outPutRangeList);
-		 }  
-		 for(Integer[] outArr : outPutRangeList )
-		 {
-			 System.out.println("["+outArr[0]+" "+outArr[1]+"]");
-		 }
-		
+		 }		
 	 }
 	 catch(WrongRangeException ex)
 	 {
@@ -33,11 +25,10 @@ public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws Wron
 	 {
 		 exp.printStackTrace();
 	 }
-	 return outPutRangeList;
+	 return rangeList;
   }
   
-  private void findMinRange(Integer[] intArrObj , ArrayList<Integer[]> rangeList )
-  {
+  private void findMinRange(Integer[] intArrObj , ArrayList<Integer[]> rangeList ){
 	 boolean doadd=true;
 	 boolean isOverLap=false;
 	 for(int i=0; i<rangeList.size();i++) 
@@ -78,8 +69,7 @@ public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws Wron
 			rangeList.add(intArrObj);
 		} 
   }
-  private boolean inRange(int rangeElement, Integer[] intArr)
-  {
+  private boolean inRange(int rangeElement, Integer[] intArr){
 	boolean isInRange=false;
 	if(rangeElement>=intArr[0] && rangeElement<=intArr[1])
 	{
@@ -87,8 +77,7 @@ public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws Wron
 	}
 	return isInRange;
   }
-  private boolean isRangeOverlap(Integer[] rangeOne, Integer[] rangeTwo)
-  {
+  private boolean isRangeOverlap(Integer[] rangeOne, Integer[] rangeTwo){
 	  boolean isRangeOverlap=false;
 	if(inRange(rangeOne[0],rangeTwo) || inRange(rangeOne[1],rangeTwo) || inRange(rangeTwo[0],rangeOne) || inRange(rangeTwo[1],rangeOne))
 	{
@@ -97,8 +86,7 @@ public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws Wron
 	return isRangeOverlap;
   }
   
-  private void checkValidRange(ArrayList<Integer[]> rangeList) throws WrongRangeException
-  {
+  private void checkValidRange(ArrayList<Integer[]> rangeList) throws WrongRangeException{
 	for(Integer[] intr : rangeList )
 	 {
 		 if(intr[1]< intr[0])
@@ -108,4 +96,14 @@ public ArrayList getRange(ArrayList<Integer []> inputRangeArrayList) throws Wron
 	 } 
 	 
   }
+  public static Comparator<Integer[]> compareRange = new Comparator<Integer[]>() {
+
+	public int compare(Integer[] arr1, Integer[] arr2) {
+
+	   int firstObjNo = arr1[0];
+	   int secondObjNo = arr2[0];
+
+	   return firstObjNo-secondObjNo;
+
+   }};
  }
